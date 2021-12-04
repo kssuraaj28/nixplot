@@ -6,6 +6,7 @@ BUFFER_SIZE=3000
 
 xdata, ydata = [], [] 
 
+
 def get_inp():
     import fileinput
     for line in fileinput.input():
@@ -36,11 +37,12 @@ def plot():
 
     def animate(_): 
         line.set_data(xdata, ydata) 
-        return line, 
+        ax.set_xlim(min(xdata),max(xdata))
+        ax.set_ylim(min(ydata),max(ydata))
 
     plt.title('Real-time plot') 
 
-    _= animation.FuncAnimation(fig, animate,blit=True,interval=20)
+    _= animation.FuncAnimation(fig, animate,interval=20)
 
     plt.show()
 
