@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+
+xdata, ydata = [], [] 
+
+def get_inp():
+    import fileinput
+    for line in fileinput.input():
+        line = str(line)
+        x,y=[float(t.strip()) for t in line.split()]
+        xdata.append(x)
+        ydata.append(y)
+  
+
+
+def plot():
+    import matplotlib.pyplot as plt 
+    import matplotlib.animation as animation 
+    plt.style.use('dark_background')
+
+    fig = plt.figure() 
+    ax = plt.axes(xlim=(0, 1), ylim=(0,1 )) 
+    line, = ax.plot([], [], lw=2) 
+
+
+    def animate(_): 
+        # t is a parameter 
+        line.set_data(xdata, ydata) 
+        ax.set_xlim([0,3])
+        return line, #Returning a sequence of artist objects
+
+    plt.title('Real-time plot') 
+
+# call the animator	 
+    _= animation.FuncAnimation(fig, animate,blit=True)
+
+    plt.show()
+
+def main():
+    import threading
+    inp_thread = threading.Thread(target=get_inp)
+    inp_thread.start()
+    plot()
+
+if __name__ == '__main__':
+    main()
